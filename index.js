@@ -34,6 +34,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+
+//axios requests to these routes would look like axios.get('IP_ADDRESS:PORT/get_access_token', 'IP_ADDRESS:PORT/accounts', etc.) 
+
 app.get('/', function(request, response, next) {
   response.render('index.ejs', {
     PLAID_PUBLIC_KEY: PLAID_PUBLIC_KEY,
@@ -134,8 +137,18 @@ app.post('/transactions', function(request, response, next) {
 //webhook. so we get info immediately after a user makes a transaction
 app.post('/connect/get', (request, response, next) => {
 
+    console.log('The webhook response is ', response);
+
 })
 
 var server = app.listen(APP_PORT, function() {
   console.log('plaid-walkthrough server listening on port ' + APP_PORT);
 });
+
+
+
+//How this fits into the rest of the program:
+//requests to plaid will be done in our backend server
+//It will get user data from firestore and then
+//get plaid data based of user ID and accessToken
+//they're used to access data and identify webhooks
